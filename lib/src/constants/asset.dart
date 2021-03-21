@@ -7,4 +7,6 @@ class Asset {
   static const String HOME_ICON = '$BASE_ICON/home.png';
   static const String SEARCH_ICON = '$BASE_ICON/search.png';
   static const String PLUS_ICON = '$BASE_ICON/plus.png';
+  static const String SETTINGS_ICON = '$BASE_ICON/settings.png';
+  static const String HELP_CIRCLE_ICON = '$BASE_ICON/help-circle.png';
 }

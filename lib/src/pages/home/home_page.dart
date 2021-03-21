@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
-import 'package:home_mobile_application/src/widgets/custom_dropdown.dart';
-import 'package:home_mobile_application/src/widgets/question_card.dart';
+import 'package:home_mobile_application/src/controller/navbar_controller.dart';
+import 'package:home_mobile_application/src/pages/create_post/create_post_page.dart';
+import 'package:home_mobile_application/src/pages/feed/feed_page.dart';
+import 'package:home_mobile_application/src/pages/profile/profile_page.dart';
+import 'package:home_mobile_application/src/pages/search/search_page.dart';
 
-class HomePage extends StatelessWidget {
-  final RxInt _navIndex = 0.obs;
+class HomePage extends StatefulWidget {
+  final outlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(7)),
+    borderSide: BorderSide(color: Color(0xFFF8F8F8)),
+  );
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _navbarController = Get.put(NavbarController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFAFDFF),
       appBar: _buildAppbar(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildDropDown(),
-              _buildFeed(),
-            ],
-          ),
-        ),
+        child: _buildContent(),
       ),
       bottomNavigationBar: _buildNavbar(),
     );
@@ -33,9 +38,11 @@ class HomePage extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        currentIndex: _navIndex.value,
+        currentIndex: _navbarController.currentIndex.value,
         onTap: (value) {
-          _navIndex.value = value;
+          setState(() {
+            _navbarController.currentIndex.value = value;
+          });
         },
         items: [
           BottomNavigationBarItem(
@@ -61,62 +68,126 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _buildDropDown() {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: getScreenWidth(13),
-        horizontal: getScreenWidth(25),
-      ),
-      child: Row(
-        children: [
-          CustomDropdown(
-            initialValue: "All Subject",
-            items: [
-              'All Subject',
-              'Mathematics',
-              'Physics',
-              'Biology',
-              'Chemistry'
-            ],
-          ),
-          SizedBox(
-            width: getScreenWidth(25),
-          ),
-          CustomDropdown(
-            initialValue: "All Grade",
-            items: [
-              'All Grade',
-              'Grade 7',
-              'Grade 8',
-              'Grade 9',
-              'High school'
-            ],
-          ),
-        ],
+  _buildAppbar() {
+    if (_navbarController.currentIndex.value == 0)
+      return _buildFeedAppbar();
+    else if (_navbarController.currentIndex.value == 1)
+      return _buildSearchAppBar();
+    else if (_navbarController.currentIndex.value == 2)
+      return _buildCreatePostAppbar();
+    else
+      return _buildNotificationAppbar();
+  }
+
+  _buildContent() {
+    if (_navbarController.currentIndex.value == 0)
+      return FeedPage();
+    else if (_navbarController.currentIndex.value == 1)
+      return SearchPage();
+    else if (_navbarController.currentIndex.value == 2)
+      return CreatePostPage();
+    else
+      return Container();
+  }
+
+  _buildCreatePostAppbar() {
+    return AppBar(
+      centerTitle: false,
+      backgroundColor: Colors.white,
+      toolbarHeight: getScreenHeight(110),
+      title: Padding(
+        padding: EdgeInsets.only(
+          left: getScreenWidth(78),
+          right: getScreenWidth(30),
+        ),
+        child: Row(
+          children: [
+            Text(
+              "Create Post",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            Spacer(),
+            Text(
+              "Post",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  _buildAppbar() {
-    var outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(7)),
-      borderSide: BorderSide(color: Color(0xFFF8F8F8)),
+  _buildSearchAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      toolbarHeight: getScreenHeight(110),
+      title: Container(
+        height: getScreenHeight(40),
+        width: double.infinity,
+        child: TextField(
+          style: TextStyle(
+            fontSize: 20,
+          ),
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Color(0xFFF8F8F8),
+            suffixIcon: Image.asset(
+              Asset.SEARCH_ICON,
+              width: getScreenWidth(25.26),
+              color: Colors.black,
+            ),
+            enabledBorder: widget.outlineInputBorder,
+            focusedBorder: widget.outlineInputBorder,
+            border: widget.outlineInputBorder,
+          ),
+        ),
+      ),
     );
+  }
+
+  _buildNotificationAppbar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      toolbarHeight: getScreenHeight(110),
+      centerTitle: false,
+      title: Padding(
+        padding: EdgeInsets.only(
+          left: getScreenWidth(78),
+        ),
+        child: Text(
+          "Notification",
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  _buildFeedAppbar() {
     return AppBar(
       backgroundColor: Colors.white,
       toolbarHeight: getScreenHeight(110),
       leadingWidth: getScreenWidth(105),
-      leading: Container(
-        margin: EdgeInsets.only(
-          left: getScreenWidth(23),
-          top: getScreenHeight(20),
-          bottom: getScreenHeight(30),
-        ),
-        height: getScreenHeight(60),
-        width: getScreenWidth(60),
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          shape: BoxShape.circle,
+      leading: GestureDetector(
+        onTap: () {
+          Get.to(ProfilePage());
+        },
+        child: Container(
+          margin: EdgeInsets.only(
+            left: getScreenWidth(23),
+            top: getScreenHeight(20),
+            bottom: getScreenHeight(30),
+          ),
+          height: getScreenHeight(60),
+          width: getScreenWidth(60),
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            shape: BoxShape.circle,
+          ),
         ),
       ),
       title: Container(
@@ -139,22 +210,12 @@ class HomePage extends StatelessWidget {
               width: getScreenWidth(25.26),
               color: Colors.black,
             ),
-            enabledBorder: outlineInputBorder,
-            focusedBorder: outlineInputBorder,
-            border: outlineInputBorder,
+            enabledBorder: widget.outlineInputBorder,
+            focusedBorder: widget.outlineInputBorder,
+            border: widget.outlineInputBorder,
           ),
         ),
       ),
     );
   }
-
-  _buildFeed() => Column(
-        children: List.generate(
-            10,
-            (index) => index == 0 || index == 5
-                ? QuestionCard(
-                    isCheck: true,
-                  )
-                : QuestionCard()),
-      );
 }
