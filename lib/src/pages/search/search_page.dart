@@ -10,9 +10,9 @@ class SearchPage extends StatelessWidget {
       child: Column(
         children: [
           _buildDropDown(),
-          QuestionCard(
-            isCheck: true,
-          ),
+          // QuestionCard(
+
+          // ),
         ],
       ),
     );

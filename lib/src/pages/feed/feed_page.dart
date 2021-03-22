@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
+import 'package:home_mobile_application/src/services/post_api.dart';
 import 'package:home_mobile_application/src/widgets/custom_dropdown.dart';
 import 'package:home_mobile_application/src/widgets/question_card.dart';
 
 class FeedPage extends StatelessWidget {
+  final postController = Get.put(PostController());
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -52,13 +56,20 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  _buildFeed() => Column(
-        children: List.generate(
-            10,
-            (index) => index == 0 || index == 5
-                ? QuestionCard(
-                    isCheck: true,
-                  )
-                : QuestionCard()),
+  _buildFeed() => Obx(
+        () {
+          if (postController.post.value == null)
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          return Column(
+            children: List.generate(
+              postController.post.value.length,
+              (index) => QuestionCard(
+                post: postController.post.value[index],
+              ),
+            ),
+          );
+        },
       );
 }

@@ -3,11 +3,15 @@ import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/controller/navbar_controller.dart';
+import 'package:home_mobile_application/src/models/post_model.dart';
 import 'package:home_mobile_application/src/widgets/answer_card.dart';
 import 'package:home_mobile_application/src/widgets/question_card.dart';
 
 class PostDetailPage extends StatelessWidget {
   final _navbarController = Get.put(NavbarController());
+  final PostModel post;
+
+  PostDetailPage({Key key, @required this.post}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +22,7 @@ class PostDetailPage extends StatelessWidget {
           child: Column(
             children: [
               QuestionCard(
-                isCheck: true,
+                post: post,
               ),
               AnswerCard(
                 isCorrect: true,

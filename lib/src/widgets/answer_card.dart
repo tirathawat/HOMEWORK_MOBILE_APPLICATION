@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/models/post_model.dart';
 
 class AnswerCard extends StatelessWidget {
-  final bool isCorrect;
+  final Comment comment;
 
-  const AnswerCard({Key key, this.isCorrect = false}) : super(key: key);
+  const AnswerCard({Key key, @required this.comment}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +30,7 @@ class AnswerCard extends StatelessWidget {
           ),
           Row(
             children: [
-              if (isCorrect)
+              if (true)
                 Row(
                   children: [
                     Image.asset(

@@ -3,18 +3,26 @@ import 'package:get/get.dart';
 
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/models/post_model.dart';
 import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class QuestionCard extends StatelessWidget {
-  final bool isCheck;
-
-  const QuestionCard({Key key, this.isCheck = false}) : super(key: key);
+  final PostModel post;
+  const QuestionCard({
+    Key key,
+    @required this.post,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(PostDetailPage());
+        Get.to(
+          PostDetailPage(
+            post: post,
+          ),
+        );
       },
       child: Container(
         color: Colors.white,
@@ -50,7 +58,7 @@ class QuestionCard extends StatelessWidget {
                   width: getScreenWidth(10),
                 ),
                 Text(
-                  '10',
+                  '${post.like}',
                   style: TextStyle(
                     fontSize: 14,
                     color: Color(0xFF717171),
@@ -69,7 +77,7 @@ class QuestionCard extends StatelessWidget {
                 width: getScreenWidth(10),
               ),
               Text(
-                '10',
+                '${post.dislike}',
                 style: TextStyle(
                   fontSize: 14,
                   color: Color(0xFF717171),
@@ -90,7 +98,7 @@ class QuestionCard extends StatelessWidget {
                 width: getScreenWidth(10),
               ),
               Text(
-                '10',
+                '${post.comment}',
                 style: TextStyle(
                   fontSize: 14,
                   color: Color(0xFF717171),
@@ -105,9 +113,10 @@ class QuestionCard extends StatelessWidget {
 
   Column _buildContent() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Python typing of class instance attributes as copies of input args",
+          post.header,
           style: TextStyle(
             fontSize: 18,
           ),
@@ -116,7 +125,7 @@ class QuestionCard extends StatelessWidget {
           height: getScreenHeight(10),
         ),
         Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy...",
+          post.detail,
           style: TextStyle(
             fontSize: 14,
             color: Color(0xFF797979),
@@ -141,7 +150,7 @@ class QuestionCard extends StatelessWidget {
           height: getScreenHeight(50),
           width: getScreenWidth(50),
           decoration: BoxDecoration(
-            color: isCheck ? Color(0xFF1ABD00) : Color(0xFFC6C6C6),
+            color: post.isVerify ? Color(0xFF1ABD00) : Color(0xFFC6C6C6),
             shape: BoxShape.circle,
           ),
           child: Image.asset(
@@ -154,13 +163,13 @@ class QuestionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Mathemetics G9",
+              "${post.roomname} ${post.levelname}",
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
             Text(
-              "Gan Dragonfly • 20 mins",
+              "${post.userName} • ${timeago.format(post.createdAt, locale: 'th en')}",
               style: TextStyle(
                 fontSize: 14,
                 color: Color(0xFF585858),
