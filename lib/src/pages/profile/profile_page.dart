@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/services/room_api.dart';
 
 class ProfilePage extends StatelessWidget {
+  final roomController = Get.put(RoomController());
+  final List<String> tags = [
+    "a",
+    "b",
+    "c",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,15 +43,20 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: [
-                    _buildTag("Mathematics"),
-                    _buildTag("Physics"),
-                    _buildTag("Biology"),
-                    _buildTag("English"),
-                  ],
+                Obx(
+                  () {
+                    if (roomController.room.value == null) return SizedBox();
+                    else
+                    return Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: List.generate(
+                        roomController.room.value.result.length,
+                        (index) => _buildTag(
+                            roomController.room.value.result[index].name),
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 73,
