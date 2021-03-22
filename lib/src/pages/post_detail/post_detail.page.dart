@@ -24,15 +24,16 @@ class PostDetailPage extends StatelessWidget {
               QuestionCard(
                 post: post,
               ),
-              AnswerCard(
-                isCorrect: true,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: getScreenWidth(60),
-                ),
-                child: AnswerCard(),
-              ),
+              // Column(children: List.generate(post.comment.length, (index) => null),),
+              // AnswerCard(comment: post.comment,
+
+              // ),
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //     left: getScreenWidth(60),
+              //   ),
+              //   child: AnswerCard(),
+              // ),
             ],
           ),
         ),

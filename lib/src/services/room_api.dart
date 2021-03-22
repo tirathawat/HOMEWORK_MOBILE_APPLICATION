@@ -34,7 +34,7 @@ class ProfileController extends GetxController {
 
   Future<void> getName() async {
     await http
-        .post(Uri.parse("api.gan-mkk.com/api/profile/name"), body: body)
+        .post(Uri.parse("http://api.gan-mkk.com/api/profile/name"), body: body)
         .then(
       (value) {
         print(value.body);
