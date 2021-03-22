@@ -7,6 +7,7 @@ import 'package:home_mobile_application/src/services/room_api.dart';
 class ProfilePage extends StatelessWidget {
   final roomController = Get.put(RoomController());
   final profileController = Get.put(ProfileController());
+  final statModelController = Get.put(StatModelController());
   final List<String> tags = [
     "a",
     "b",
@@ -170,12 +171,25 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text(
-              "100",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+            Obx(
+              () {
+                if (statModelController.stat.value == null)
+                  return Text(
+                    "0",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  );
+                else
+                  return Text(
+                    statModelController.stat.value.result.post,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  );
+              },
             ),
             Text(
               " Question",
@@ -198,12 +212,25 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text(
-              "100",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+            Obx(
+              () {
+                if (statModelController.stat.value == null)
+                  return Text(
+                    "0",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  );
+                else
+                  return Text(
+                    statModelController.stat.value.result.comment,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  );
+              },
             ),
             Text(
               " Answers",
@@ -235,6 +262,7 @@ class ProfilePage extends StatelessWidget {
         ),
         Flexible(
           child: Padding(
+<<<<<<< HEAD
             padding: EdgeInsets.only(
               top: 10,
             ),
@@ -266,6 +294,28 @@ class ProfilePage extends StatelessWidget {
                 //       );
                 //   },
                 // ),
+=======
+            padding: EdgeInsets.only(top: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(
+                  () {
+                    if (profileController.name.value == null)
+                      return SizedBox();
+                    else
+                      return Text(
+                        profileController.name.value.result,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      );
+                  },
+                ),
+>>>>>>> a43eb93b2ebf7753a2e6aabc3c730a2a89c723da
                 SizedBox(
                   height: 5,
                 ),
