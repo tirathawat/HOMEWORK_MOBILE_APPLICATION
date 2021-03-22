@@ -6,6 +6,7 @@ import 'package:home_mobile_application/src/services/room_api.dart';
 
 class ProfilePage extends StatelessWidget {
   final roomController = Get.put(RoomController());
+  final profileController = Get.put(ProfileController());
   final List<String> tags = [
     "a",
     "b",
@@ -45,17 +46,18 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Obx(
                   () {
-                    if (roomController.room.value == null) return SizedBox();
+                    if (roomController.room.value == null)
+                      return SizedBox();
                     else
-                    return Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: List.generate(
-                        roomController.room.value.result.length,
-                        (index) => _buildTag(
-                            roomController.room.value.result[index].name),
-                      ),
-                    );
+                      return Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: List.generate(
+                          roomController.room.value.result.length,
+                          (index) => _buildTag(
+                              roomController.room.value.result[index].name),
+                        ),
+                      );
                   },
                 ),
                 SizedBox(
@@ -236,14 +238,21 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Gan Dragonfly",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 24,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Obx(
+                () {
+                  if (profileController.name.value == null)
+                    return SizedBox();
+                  else
+                    return Text(
+                      profileController.name.value.result,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 24,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                },
               ),
               SizedBox(
                 height: 5,
