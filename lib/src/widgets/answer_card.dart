@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/models/post_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class AnswerCard extends StatelessWidget {
   final Comment comment;
@@ -22,7 +23,7 @@ class AnswerCard extends StatelessWidget {
             height: 20,
           ),
           Text(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            comment.detail,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
           ),
           SizedBox(
@@ -30,7 +31,7 @@ class AnswerCard extends StatelessWidget {
           ),
           Row(
             children: [
-              if (true)
+              if (comment.isVerify)
                 Row(
                   children: [
                     Image.asset(
@@ -63,7 +64,7 @@ class AnswerCard extends StatelessWidget {
                     width: getScreenWidth(10),
                   ),
                   Text(
-                    '10',
+                    '${comment.like}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xFF5F5F5F),
@@ -80,7 +81,7 @@ class AnswerCard extends StatelessWidget {
                     width: getScreenWidth(10),
                   ),
                   Text(
-                    '10',
+                    '${comment.dislike}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xFF5F5F5F),
@@ -117,7 +118,7 @@ class AnswerCard extends StatelessWidget {
           width: 5,
         ),
         Text(
-          "Jet Dragonfly",
+          comment.commentor,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -127,7 +128,7 @@ class AnswerCard extends StatelessWidget {
           width: 10,
         ),
         Text(
-          "3 m",
+          "${timeago.format(comment.createdAt, locale: 'th en')}",
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w300,

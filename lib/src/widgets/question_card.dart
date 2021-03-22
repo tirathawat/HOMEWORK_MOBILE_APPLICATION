@@ -98,7 +98,7 @@ class QuestionCard extends StatelessWidget {
                 width: getScreenWidth(10),
               ),
               Text(
-                '${post.comment}',
+                '${post.comment.length}',
                 style: TextStyle(
                   fontSize: 14,
                   color: Color(0xFF717171),

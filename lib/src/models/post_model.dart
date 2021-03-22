@@ -92,33 +92,73 @@ class Comment {
     this.isVerify,
     this.commentor,
     this.createdAt,
+    this.userId,
+    this.name,
+    this.bio,
+    this.token,
+    this.subcomment,
+    this.like,
+    this.dislike,
+    this.isreact,
   });
 
   int commentId;
   String detail;
-  dynamic parentCommentId;
+  int parentCommentId;
   int parentPostId;
-  int isVerify;
+  bool isVerify;
   String commentor;
   DateTime createdAt;
+  String userId;
+  String name;
+  dynamic bio;
+  String token;
+  List<Comment> subcomment;
+  int like;
+  int dislike;
+  bool isreact;
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
         commentId: json["comment_id"],
         detail: json["detail"],
-        parentCommentId: json["parent_comment_id"],
-        parentPostId: json["parent_post_id"],
+        parentCommentId: json["parent_comment_id"] == null
+            ? null
+            : json["parent_comment_id"],
+        parentPostId:
+            json["parent_post_id"] == null ? null : json["parent_post_id"],
         isVerify: json["is_verify"],
         commentor: json["commentor"],
         createdAt: DateTime.parse(json["created_at"]),
+        userId: json["user_id"],
+        name: json["name"],
+        bio: json["bio"],
+        token: json["token"],
+        subcomment: json["subcomment"] == null
+            ? null
+            : List<Comment>.from(
+                json["subcomment"].map((x) => Comment.fromJson(x))),
+        like: json["like"],
+        dislike: json["dislike"],
+        isreact: json["isreact"],
       );
 
   Map<String, dynamic> toJson() => {
         "comment_id": commentId,
         "detail": detail,
-        "parent_comment_id": parentCommentId,
-        "parent_post_id": parentPostId,
+        "parent_comment_id": parentCommentId == null ? null : parentCommentId,
+        "parent_post_id": parentPostId == null ? null : parentPostId,
         "is_verify": isVerify,
         "commentor": commentor,
         "created_at": createdAt.toIso8601String(),
+        "user_id": userId,
+        "name": name,
+        "bio": bio,
+        "token": token,
+        "subcomment": subcomment == null
+            ? null
+            : List<dynamic>.from(subcomment.map((x) => x.toJson())),
+        "like": like,
+        "dislike": dislike,
+        "isreact": isreact,
       };
 }

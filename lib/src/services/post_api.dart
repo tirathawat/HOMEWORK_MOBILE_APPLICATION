@@ -10,7 +10,7 @@ class PostController extends GetxController {
       "token": "bebded0c-925f-4ee2-b5c5-55ae16873dbe"
     };
     await http
-        .post(Uri.parse("http://api.gan-mkk.com/api/post"), body: body)
+        .post(Uri.parse("http://api.gan-mkk.com/api/full/post"), body: body)
         .then(
       (value) {
         print(value.body);

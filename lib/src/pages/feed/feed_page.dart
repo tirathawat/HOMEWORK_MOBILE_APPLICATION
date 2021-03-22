@@ -62,11 +62,20 @@ class FeedPage extends StatelessWidget {
             return Center(
               child: CircularProgressIndicator(),
             );
-          return Column(
-            children: List.generate(
-              postController.post.value.length,
-              (index) => QuestionCard(
-                post: postController.post.value[index],
+          return RefreshIndicator(
+            onRefresh: () async {
+              await postController.getPost();
+            },
+            child: Container(
+              width: double.infinity,
+              height: Get.height - 300,
+              child: ListView(
+                children: List.generate(
+                  postController.post.value.length,
+                  (index) => QuestionCard(
+                    post: postController.post.value[index],
+                  ),
+                ),
               ),
             ),
           );

@@ -233,39 +233,52 @@ class ProfilePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(
-                () {
-                  if (profileController.name.value == null)
-                    return SizedBox();
-                  else
-                    return Text(
-                      profileController.name.value.result,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 24,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    );
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                "bio",
-                style: TextStyle(
-                  fontSize: 18,
+        Flexible(
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "sdkfbsdkjfbdsjkfjkdsbfjksdbfjkbdsjkfjdsbfjdsbfkjsdbfjksdbfjksdbksbf",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 24,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-            ],
+                // Obx(
+                //   () {
+                //     if (profileController.name.value == null)
+                //       return SizedBox();
+                //     else
+                //       return Text(
+                //         "sdkfbsdkjfbdsjkfjkdsbfjksdbfjkbdsjkfjdsbfjdsbfkjsdbfjksdbfjksdbksbf",
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.w600,
+                //           fontSize: 24,
+                //         ),
+                //         maxLines: 1,
+                //         overflow: TextOverflow.ellipsis,
+                //       );
+                //   },
+                // ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "bio",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ],
+            ),
           ),
         ),
       ],
