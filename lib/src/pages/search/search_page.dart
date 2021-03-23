@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/widgets/custom_dropdown.dart';
-import 'package:home_mobile_application/src/widgets/question_card.dart';
 
 class SearchPage extends StatelessWidget {
   @override
