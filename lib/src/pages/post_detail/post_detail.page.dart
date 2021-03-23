@@ -37,9 +37,15 @@ class PostDetailPage extends StatelessWidget {
                               child: Column(
                                 children: List.generate(
                                     post.comment[index].subcomment.length,
-                                    (index) => AnswerCard(
+                                    (index) {
+                                  if (post.comment[index].subcomment.length ==
+                                      0)
+                                    return SizedBox();
+                                  else
+                                    return AnswerCard(
                                         comment: post
-                                            .comment[index].subcomment[index])),
+                                            .comment[index].subcomment[index]);
+                                }),
                               ),
                             ),
                             SizedBox(
