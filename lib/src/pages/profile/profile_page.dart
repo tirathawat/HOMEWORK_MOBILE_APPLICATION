@@ -262,39 +262,6 @@ class ProfilePage extends StatelessWidget {
         ),
         Flexible(
           child: Padding(
-<<<<<<< HEAD
-            padding: EdgeInsets.only(
-              top: 10,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "sdkfbsdkjfbdsjkfjkdsbfjksdbfjkbdsjkfjdsbfjdsbfkjsdbfjksdbfjksdbksbf",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                // Obx(
-                //   () {
-                //     if (profileController.name.value == null)
-                //       return SizedBox();
-                //     else
-                //       return Text(
-                //         "sdkfbsdkjfbdsjkfjkdsbfjksdbfjkbdsjkfjdsbfjdsbfkjsdbfjksdbfjksdbksbf",
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.w600,
-                //           fontSize: 24,
-                //         ),
-                //         maxLines: 1,
-                //         overflow: TextOverflow.ellipsis,
-                //       );
-                //   },
-                // ),
-=======
             padding: EdgeInsets.only(top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,7 +282,6 @@ class ProfilePage extends StatelessWidget {
                       );
                   },
                 ),
->>>>>>> a43eb93b2ebf7753a2e6aabc3c730a2a89c723da
                 SizedBox(
                   height: 5,
                 ),
