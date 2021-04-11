@@ -4,106 +4,122 @@ import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 
 class ProfilePage extends StatelessWidget {
+  final List<String> rooms = [
+    "Math",
+    "English",
+    "Physic",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: getScreenWidth(26),
-              vertical: getScreenHeight(30),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeading(),
-                SizedBox(
-                  height: 30,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: getScreenWidth(26),
+                  vertical: getScreenHeight(30),
                 ),
-                SizedBox(
-                  height: 30,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildHeading(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Room",
+                      style: TextStyle(
+                        fontFamily: "SF Pro",
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Wrap(
+                      children: List.generate(
+                        rooms.length,
+                        (index) => _buildTag(
+                          rooms[index],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 43,
+                    ),
+                    Text(
+                      "Post",
+                      style: TextStyle(
+                        fontFamily: "SF Pro",
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Room",
-                  style: TextStyle(
-                    
-                    fontSize: 24,
-                  
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                _buildAnswer(true),
-                _buildAnswer(false),
-              ],
-            ),
+              ),
+              _buildPostItem(true),
+            ],
           ),
         ),
       ),
     );
   }
 
-  _buildAnswer(bool ischeck) {
+  Container _buildPostItem(bool isCorrect) {
     return Container(
-      margin: EdgeInsets.only(
-        bottom: 25,
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Color(0x929292).withOpacity(.35),
+          ),
+          bottom: BorderSide(
+            color: Color(0x929292).withOpacity(.35),
+          ),
+        ),
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 28,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(
-            flex: 15,
-            child: Container(
-              margin: EdgeInsets.only(
-                top: 5,
-                right: 18,
-              ),
-              padding: EdgeInsets.all(5),
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: ischeck ? Color(0xFF1ABD00) : Color(0xFFC6C6C6),
-                shape: BoxShape.circle,
-              ),
-              child: Image.asset(
-                Asset.CHECK_CIRCLE_ICON,
-              ),
-            ),
+          SvgPicture.asset(
+            Asset.BOOK_ICON,
+            color: isCorrect ? Color(0xFF00800D) : Color(0xFF8A8A8A),
           ),
-          Expanded(
-            flex: 85,
+          SizedBox(
+            width: 10,
+          ),
+          Flexible(
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "Mathemetics G9",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "20 mins",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF585858),
-                      ),
-                    ),
-                  ],
+                Text(
+                  "Lorem ipsum.",
+                  style: TextStyle(
+                    fontFamily: "SF Pro",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Text(
-                  "Python typing of class instance attributes as copies of input args",
+                  "Math : G9 : 2m ago",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontFamily: "SF Pro",
+                    fontSize: 11,
+                    color: Color(0xFF8A8A8A),
                   ),
                 ),
               ],
@@ -116,19 +132,29 @@ class ProfilePage extends StatelessWidget {
 
   Container _buildTag(String text) {
     return Container(
+      margin: EdgeInsets.only(
+        right: 10,
+      ),
       padding: EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 8,
+        horizontal: 20,
+        vertical: 5,
       ),
       decoration: BoxDecoration(
-        color: Color(0xFF0073BB),
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(
+          15,
+        ),
+        border: Border.all(
+          color: Color(0xFFD75A20),
+        ),
       ),
       child: Text(
         text,
         style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
+          fontFamily: "SF Pro",
+          fontWeight: FontWeight.w600,
+          fontSize: 15,
+          color: Color(0xFFD75A20),
         ),
       ),
     );
