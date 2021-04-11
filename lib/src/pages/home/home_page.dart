@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/constants/items_dropdown.dart';
 import 'package:home_mobile_application/src/controller/navbar_controller.dart';
 import 'package:home_mobile_application/src/pages/create_post/create_post_page.dart';
 import 'package:home_mobile_application/src/pages/feed/feed_page.dart';
@@ -19,7 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _navbarController = Get.put(NavbarController());
-
+  final int _gradeDropdownIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,51 +170,16 @@ class _HomePageState extends State<HomePage> {
 
   _buildFeedAppbar() {
     return AppBar(
+      centerTitle: false,
       backgroundColor: Colors.white,
-      toolbarHeight: getScreenHeight(110),
-      leadingWidth: getScreenWidth(105),
-      leading: GestureDetector(
-        onTap: () {
-          Get.to(ProfilePage());
-        },
-        child: Container(
-          margin: EdgeInsets.only(
-            left: getScreenWidth(23),
-            top: getScreenHeight(20),
-            bottom: getScreenHeight(30),
-          ),
-          height: getScreenHeight(60),
-          width: getScreenWidth(60),
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ),
-      title: Container(
-        height: getScreenHeight(40),
-        width: double.infinity,
-        margin: EdgeInsets.only(
-          bottom: getScreenHeight(10),
-          right: getScreenWidth(15),
-        ),
-        child: TextField(
-          style: TextStyle(
-            fontSize: 20,
-          ),
-          cursorColor: Colors.black,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Color(0xFFF8F8F8),
-            suffixIcon: Image.asset(
-              Asset.SEARCH_ICON,
-              width: getScreenWidth(25.26),
-              color: Colors.black,
-            ),
-            enabledBorder: widget.outlineInputBorder,
-            focusedBorder: widget.outlineInputBorder,
-            border: widget.outlineInputBorder,
-          ),
+      leading: Container(),
+      title: Text(
+        kGradeList[_gradeDropdownIndex],
+        style: TextStyle(
+          fontFamily: 'SF Pro',
+          fontWeight: FontWeight.w500,
+          fontSize: getScreenWidth(20),
+          color: Color(0xFF282846),
         ),
       ),
     );
