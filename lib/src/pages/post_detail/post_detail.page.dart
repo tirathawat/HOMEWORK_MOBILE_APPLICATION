@@ -22,8 +22,8 @@ class PostDetailPage extends StatelessWidget {
           child: Column(
             children: [
               QuestionCard(
-                post: post,
-              ),
+                  //post: post,
+                  ),
               Column(
                 children: List.generate(
                     post.comment.length,

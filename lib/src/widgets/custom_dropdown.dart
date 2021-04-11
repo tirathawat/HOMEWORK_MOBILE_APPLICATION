@@ -24,10 +24,12 @@ class CustomDropdown extends StatelessWidget {
         child: ButtonTheme(
           alignedDropdown: true,
           child: DropdownButton(
-            style: TextStyle(fontSize: 14, color: Colors.black),
+            style: TextStyle(
+                fontFamily: "SF Pro", fontSize: 17, color: Colors.black),
             hint: Text(
               hintText ?? "",
-              style: TextStyle(fontSize: 14, color: Color(0xFF6D6D6D)),
+              style: TextStyle(
+                  fontFamily: "SF Pro", fontSize: 17, color: Color(0xFF6D6D6D)),
             ),
             icon: Transform.rotate(
               angle: pi / 2,

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="user_icon" transform="translate(-329 -63)">
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(329 63)" fill="#fff" stroke="#707070" stroke-width="1">
+      <circle cx="15" cy="15" r="15" stroke="none"/>
+      <circle cx="15" cy="15" r="14.5" fill="none"/>
+    </g>
+    <g id="user_icon-2" data-name="user_icon" transform="translate(9.5 4.5)">
+      <path id="Intersection_1" data-name="Intersection 1" d="M0,15A15,15,0,1,1,15,30,15,15,0,0,1,0,15Zm5.912,7.68a11.877,11.877,0,0,0,18.177,0,6.917,6.917,0,0,0-6.11-3.71,1.517,1.517,0,0,0-.441.069A8.184,8.184,0,0,1,15,19.466a8.22,8.22,0,0,1-2.537-.428,1.509,1.509,0,0,0-.44-.069A6.917,6.917,0,0,0,5.912,22.68ZM9.541,11.03A5.459,5.459,0,1,0,15,5.571,5.459,5.459,0,0,0,9.541,11.03Z" transform="translate(319.5 58.5)" fill="#282846"/>
+    </g>
+  </g>
+</svg>

@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
-import 'package:home_mobile_application/src/services/room_api.dart';
 
 class ProfilePage extends StatelessWidget {
-  final roomController = Get.put(RoomController());
-  final profileController = Get.put(ProfileController());
-  final statModelController = Get.put(StatModelController());
-  final List<String> tags = [
-    "a",
-    "b",
-    "c",
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,38 +22,19 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                _buildStat(),
                 SizedBox(
                   height: 30,
                 ),
                 Text(
                   "Room",
                   style: TextStyle(
+                    
                     fontSize: 24,
-                    fontWeight: FontWeight.w600,
+                  
                   ),
                 ),
                 SizedBox(
                   height: 20,
-                ),
-                Obx(
-                  () {
-                    if (roomController.room.value == null)
-                      return SizedBox();
-                    else
-                      return Wrap(
-                        runSpacing: 10,
-                        spacing: 10,
-                        children: List.generate(
-                          roomController.room.value.result.length,
-                          (index) => _buildTag(
-                              roomController.room.value.result[index].name),
-                        ),
-                      );
-                  },
-                ),
-                SizedBox(
-                  height: 73,
                 ),
                 _buildAnswer(true),
                 _buildAnswer(false),
@@ -162,103 +134,16 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Column _buildStat() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Image.asset(Asset.HELP_CIRCLE_ICON),
-            SizedBox(
-              width: 10,
-            ),
-            Obx(
-              () {
-                if (statModelController.stat.value == null)
-                  return Text(
-                    "0",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  );
-                else
-                  return Text(
-                    statModelController.stat.value.result.post,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  );
-              },
-            ),
-            Text(
-              " Question",
-              style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF828282),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Row(
-          children: [
-            Image.asset(
-              Asset.COMMENT_ICON,
-              color: Color(0xFF828282),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Obx(
-              () {
-                if (statModelController.stat.value == null)
-                  return Text(
-                    "0",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  );
-                else
-                  return Text(
-                    statModelController.stat.value.result.comment,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  );
-              },
-            ),
-            Text(
-              " Answers",
-              style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF828282),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   Row _buildHeading() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.only(
-            right: getScreenWidth(20),
-          ),
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.circular(20),
-          ),
+        SvgPicture.asset(
+          Asset.PROFILE_CIRCLE_ICON,
+          width: 80,
+        ),
+        SizedBox(
+          width: 20,
         ),
         Flexible(
           child: Padding(
@@ -266,29 +151,24 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(
-                  () {
-                    if (profileController.name.value == null)
-                      return SizedBox();
-                    else
-                      return Text(
-                        profileController.name.value.result,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      );
-                  },
+                Text(
+                  "mai yak sod lew kub",
+                  style: TextStyle(
+                      fontFamily: "SF Pro",
+                      fontSize: 13,
+                      color: Color(0xFF444444)),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 12,
                 ),
                 Text(
-                  "bio",
+                  "100 Posts 100 Comments",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontFamily: "SF Pro",
+                    fontSize: 11,
+                    color: Color(0xFF929292),
                   ),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -306,27 +186,28 @@ class ProfilePage extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
-        actions: [
-          Row(
-            children: [
-              Icon(Icons.bookmark_outline),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                "Saved",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-              ),
-            ],
+        title: Text(
+          "K. Thongsawang",
+          style: TextStyle(
+            fontFamily: "SF Pro",
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF282846),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 10,
-            ),
-            child: Image.asset(Asset.SETTINGS_ICON),
+        ),
+        actions: [
+          SvgPicture.asset(
+            Asset.BOOKMARK_ICON,
+            color: Color(0xFF282846),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          SvgPicture.asset(
+            Asset.SETTING_ICON,
+          ),
+          SizedBox(
+            width: 30,
           ),
         ],
       );

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="search_button" transform="translate(-289 -63)">
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(289 63)" fill="#fff" stroke="#282846" stroke-width="2">
+      <circle cx="15" cy="15" r="15" stroke="none"/>
+      <circle cx="15" cy="15" r="14" fill="none"/>
+    </g>
+    <path id="Icon_ionic-ios-search" data-name="Icon ionic-ios-search" d="M19.324,18.411,15.152,14.2a5.945,5.945,0,1,0-.9.914L18.394,19.3a.642.642,0,0,0,.906.023A.646.646,0,0,0,19.324,18.411ZM10.48,15.165A4.694,4.694,0,1,1,13.8,13.79,4.666,4.666,0,0,1,10.48,15.165Z" transform="translate(292 66.005)" fill="#282846" stroke="#282846" stroke-width="0.5"/>
+  </g>
+</svg>

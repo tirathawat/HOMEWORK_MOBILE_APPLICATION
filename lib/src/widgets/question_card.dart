@@ -1,138 +1,163 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'dart:math';
 
-import 'package:home_mobile_application/src/config/size.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
-import 'package:home_mobile_application/src/models/post_model.dart';
-import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class QuestionCard extends StatelessWidget {
-  final PostModel post;
-  const QuestionCard({
-    Key key,
-    @required this.post,
-  }) : super(key: key);
+  final bool hasImage, hasText;
 
+  const QuestionCard({Key key, this.hasImage = false, this.hasText = true})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(
-          PostDetailPage(
-            post: post,
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 20,
           ),
-        );
-      },
-      child: Container(
-        color: Colors.white,
-        margin: EdgeInsets.only(
-          bottom: 17,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: getScreenWidth(20),
-          vertical: getScreenHeight(20),
-        ),
-        child: Column(
-          children: [
-            _buildHeading(),
-            _buildContent(),
-            _buildBottom(),
-          ],
-        ),
+          _buildHeading(),
+          SizedBox(
+            height: 20,
+          ),
+          _buildTitle(),
+          SizedBox(
+            height: 15,
+          ),
+          _buildDetail(),
+          SizedBox(
+            height: 30,
+          ),
+          _buildBottom(),
+          SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
   }
 
   Row _buildBottom() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Expanded(
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(Asset.LIKE_ICON),
-                SizedBox(
-                  width: getScreenWidth(10),
-                ),
-                Text(
-                  '${post.like}',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF717171),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(Asset.DISLIKE_ICON),
-              SizedBox(
-                width: getScreenWidth(10),
-              ),
-              Text(
-                '${post.dislike}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF717171),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                Asset.COMMENT_ICON,
-                color: Color(0xFF717171),
-              ),
-              SizedBox(
-                width: getScreenWidth(10),
-              ),
-              Text(
-                '${post.comment.length}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF717171),
-                ),
-              ),
-            ],
-          ),
-        ),
+        _buildLike(),
+        _buildComment(),
+        _buildbookmark(),
       ],
     );
   }
 
-  Column _buildContent() {
+  _buildbookmark() {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(Asset.BOOKMARK_ICON),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "mark",
+            style: TextStyle(
+              fontFamily: "SF Pro",
+              fontSize: 12,
+              color: Color(0xFFFF9900),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildComment() {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(Asset.COMMENT_ICON),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "150",
+            style: TextStyle(
+              fontFamily: "SF Pro",
+              fontSize: 12,
+              color: Color(0xFF929292),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildLike() {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(Asset.LIKE_ICON),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "150",
+            style: TextStyle(
+              fontFamily: "SF Pro",
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Transform.rotate(
+            angle: pi,
+            child: SvgPicture.asset(Asset.LIKE_ICON),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildDetail() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          post.header,
-          style: TextStyle(
-            fontSize: 18,
+        if (hasText)
+          Text(
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et",
+            style: TextStyle(
+              fontFamily: "SF Pro",
+              fontSize: 12,
+              color: Color(0xFF929292),
+            ),
           ),
-        ),
+        if (hasImage)
+          Center(child: Image.asset("assets/icons/promotion_image_mock.png")),
+      ],
+    );
+  }
+
+  Row _buildTitle() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SvgPicture.asset(Asset.BOOK_ICON),
         SizedBox(
-          height: getScreenHeight(10),
+          width: 10,
         ),
-        Text(
-          post.detail,
-          style: TextStyle(
-            fontSize: 14,
-            color: Color(0xFF797979),
+        Flexible(
+          child: Text(
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam ng",
+            style: TextStyle(
+              fontFamily: "SF Pro",
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF282846),
+            ),
           ),
-        ),
-        SizedBox(
-          height: getScreenHeight(14),
         ),
       ],
     );
@@ -140,45 +165,38 @@ class QuestionCard extends StatelessWidget {
 
   Row _buildHeading() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.only(
-            right: getScreenWidth(23),
-            bottom: getScreenHeight(13),
-          ),
-          height: getScreenHeight(50),
-          width: getScreenWidth(50),
-          decoration: BoxDecoration(
-            color: post.isVerify ? Color(0xFF1ABD00) : Color(0xFFC6C6C6),
-            shape: BoxShape.circle,
-          ),
-          child: Image.asset(
-            Asset.CHECK_CIRCLE_ICON,
-            height: getScreenHeight(25),
-            width: getScreenWidth(25),
-          ),
+        SvgPicture.asset(
+          Asset.PROFILE_CIRCLE_ICON,
+          width: 40,
+        ),
+        SizedBox(
+          width: 15,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${post.roomname} ${post.levelname}",
+              "Math : G.9 : 2 m ago",
               style: TextStyle(
-                fontSize: 18,
+                fontFamily: "SF Pro",
+                fontSize: 15,
+                color: Color(0xFF929292),
               ),
             ),
             Text(
-              "${post.userName} • ${timeago.format(post.createdAt, locale: 'th en')}",
+              "Kasama Thongsawang",
               style: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF585858),
+                fontFamily: "SF Pro",
+                fontSize: 17,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF343447),
               ),
             ),
           ],
         ),
         Spacer(),
-        Icon(Icons.more_vert),
+        SvgPicture.asset(Asset.VERTICAL_POINT_ICON),
       ],
     );
   }
