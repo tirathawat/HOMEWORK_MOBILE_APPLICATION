@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:home_mobile_application/src/config/size.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/constants/type.dart';
-import 'package:home_mobile_application/src/widgets/custom_dropdown.dart';
+import 'package:home_mobile_application/src/pages/search/search_result_page.dart';
 
 class SearchPage extends StatelessWidget {
   final outlineInputBorder = OutlineInputBorder(
@@ -179,6 +179,9 @@ class SearchPage extends StatelessWidget {
       ),
       height: 40,
       child: TextField(
+        onSubmitted: (value) {
+          Get.to(SearchResultPage(searchStr: value));
+        },
         style: TextStyle(
           fontFamily: "SF Pro",
           fontSize: 15,
@@ -201,47 +204,6 @@ class SearchPage extends StatelessWidget {
           focusedBorder: outlineInputBorder,
           border: outlineInputBorder,
         ),
-      ),
-    );
-  }
-
-  _buildDropDown() {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: getScreenWidth(13),
-        horizontal: getScreenWidth(25),
-      ),
-      child: Row(
-        children: [
-          CustomDropdown(
-            hintText: "Subject",
-            items: [
-              'All Subject',
-              'Mathematics',
-              'Physics',
-              'Biology',
-              'Chemistry'
-            ],
-          ),
-          CustomDropdown(
-            hintText: "Grade",
-            items: [
-              'All Grade',
-              'Grade 7',
-              'Grade 8',
-              'Grade 9',
-              'High school'
-            ],
-          ),
-          CustomDropdown(
-            hintText: "Sort By",
-            items: [
-              'Grade',
-              'Date',
-              'Like',
-            ],
-          ),
-        ],
       ),
     );
   }

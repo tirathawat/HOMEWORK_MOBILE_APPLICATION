@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_mobile_application/src/pages/home/home_page.dart';
+import 'package:home_mobile_application/src/pages/loading/loading_page.dart';
 
 class App extends StatelessWidget {
   @override
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: LoadingPage(),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/widgets/custom_dropdown.dart';
-import 'package:home_mobile_application/src/widgets/custom_textform.dart';
 
 class CreatePostPage extends StatelessWidget {
   @override

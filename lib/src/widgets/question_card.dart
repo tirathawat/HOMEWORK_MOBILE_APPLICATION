@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
 
 class QuestionCard extends StatelessWidget {
   final bool hasImage, hasText;
@@ -11,30 +13,35 @@ class QuestionCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          _buildHeading(),
-          SizedBox(
-            height: 20,
-          ),
-          _buildTitle(),
-          SizedBox(
-            height: 15,
-          ),
-          _buildDetail(),
-          SizedBox(
-            height: 30,
-          ),
-          _buildBottom(),
-          SizedBox(
-            height: 15,
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Get.to(PostDetailPage());
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            _buildHeading(),
+            SizedBox(
+              height: 20,
+            ),
+            _buildTitle(),
+            SizedBox(
+              height: 15,
+            ),
+            _buildDetail(),
+            SizedBox(
+              height: 30,
+            ),
+            _buildBottom(),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
       ),
     );
   }

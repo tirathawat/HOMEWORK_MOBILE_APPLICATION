@@ -1,4 +1,5 @@
 class Asset {
+  static const String BASE_IMAGE = 'assets/images';
   static const String BASE_ICON = 'assets/icons';
   static const String CHECK_CIRCLE_ICON = '$BASE_ICON/check-circle.png';
   static const String LIKE_ICON = '$BASE_ICON/like.svg';
@@ -26,4 +27,11 @@ class Asset {
   static const String FILE_ICON = '$BASE_ICON/file.svg';
   static const String SUB_ARROW_ICON = '$BASE_ICON/sub_arrow.svg';
   static const String SETTING_ICON = '$BASE_ICON/setting.svg';
+  static const String SORT_ICON = '$BASE_ICON/sort.svg';
+  static const String GOOGLE_ICON = '$BASE_ICON/google.svg';
+
+  static const String HOMEWORK_LOGO_IMAGE = '$BASE_IMAGE/homework_logo.png';
+  static const String PROMOTE1_IMAGE = '$BASE_IMAGE/promote_1.png';
+  static const String PROMOTE2_IMAGE = '$BASE_IMAGE/promote_2.png';
+  static const String PROMOTE3_IMAGE = '$BASE_IMAGE/promote_3.png';
 }

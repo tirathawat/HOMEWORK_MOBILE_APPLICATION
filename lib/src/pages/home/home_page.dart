@@ -161,8 +161,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          SvgPicture.asset(
-            Asset.SEARCH_CIRCLE_ICON,
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _navbarController.currentIndex.value = 1;
+              });
+            },
+            child: SvgPicture.asset(
+              Asset.SEARCH_CIRCLE_ICON,
+            ),
           ),
           SizedBox(
             width: 10,
