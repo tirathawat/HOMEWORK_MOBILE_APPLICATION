@@ -4,13 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/models/post_model.dart';
 import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
 
 class QuestionCard extends StatelessWidget {
   final bool hasImage, hasText;
-
-  const QuestionCard({Key key, this.hasImage = false, this.hasText = true})
-      : super(key: key);
+  final PostModel post;
+  const QuestionCard({
+    Key key,
+    this.hasImage = false,
+    this.hasText = true,
+    @required this.post,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -134,7 +139,7 @@ class QuestionCard extends StatelessWidget {
       children: [
         if (hasText)
           Text(
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et",
+            post.detail,
             style: TextStyle(
               fontFamily: "SF Pro",
               fontSize: 12,
@@ -157,7 +162,7 @@ class QuestionCard extends StatelessWidget {
         ),
         Flexible(
           child: Text(
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam ng",
+            post.header,
             style: TextStyle(
               fontFamily: "SF Pro",
               fontSize: 17,

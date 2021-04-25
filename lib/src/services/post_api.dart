@@ -1,27 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:home_mobile_application/src/models/post_model.dart';
-import 'package:http/http.dart' as http;
 
 class PostController extends GetxController {
   Rx<List<PostModel>> post = Rx<List<PostModel>>();
 
-  Future<void> getPost() async {
-    Map<String, dynamic> body = {
-      "token": "bebded0c-925f-4ee2-b5c5-55ae16873dbe"
-    };
-    await http
-        .post(Uri.parse("http://api.gan-mkk.com/api/full/post"), body: body)
-        .then(
-      (value) {
-        print(value.body);
-        post.value = postModelFromJson(value.body);
-      },
-    );
+  Future<List<PostModel>> getPost() async {
+    return FirebaseFirestore.instance.collection("posts").get().then((e) {
+      List<PostModel> posts = [];
+      e.docs.forEach((element) {
+        posts.add(PostModel(
+          postId: element.id,
+          header: element["header"],
+          detail: element["detail"],
+          roomId: element["room"],
+          levelId: element["level"],
+          posterId: element["poster_id"],
+          createdAt: element["created_at"].toDate(),
+        ));
+      });
+      return posts;
+    });
   }
 
   @override
-  void onReady() async {
-    super.onReady();
+  void onInit() async {
     await getPost();
+    super.onInit();
   }
 }

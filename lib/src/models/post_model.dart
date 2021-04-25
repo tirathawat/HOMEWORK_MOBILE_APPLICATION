@@ -29,11 +29,11 @@ class PostModel {
     this.isVerify,
   });
 
-  int postId;
+  String postId;
   String header;
   String detail;
-  int roomId;
-  int levelId;
+  String roomId;
+  String levelId;
   String posterId;
   DateTime createdAt;
   String userName;

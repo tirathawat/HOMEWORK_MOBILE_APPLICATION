@@ -23,26 +23,29 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  _buildFeed() => Column(
-        children: List.generate(
-          20,
-          (index) => Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
+  _buildFeed() => Obx(
+        () => Column(
+          children: List.generate(
+            postController.post.value.length,
+            (index) => Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: QuestionCard(
+                    post: postController.post.value[index],
+                    hasImage: index == 1 ? true : false,
+                    hasText: index == 1 ? false : true,
+                  ),
                 ),
-                child: QuestionCard(
-                  hasImage: index == 1 ? true : false,
-                  hasText: index == 1 ? false : true,
+                Container(
+                  color: Color(0xFF707070).withOpacity(.25),
+                  height: 5,
+                  width: double.infinity,
                 ),
-              ),
-              Container(
-                color: Color(0xFF707070).withOpacity(.25),
-                height: 5,
-                width: double.infinity,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
