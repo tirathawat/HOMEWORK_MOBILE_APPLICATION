@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/pages/home/home_page.dart';
+import 'package:home_mobile_application/src/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -31,8 +32,21 @@ class SignInPage extends StatelessWidget {
                     vertical: 12,
                   ),
                 ),
-                onPressed: () {
-                  Get.offAll(HomePage());
+                onPressed: () async {
+                  Get.dialog(Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Color(0xFF282846),
+                      ),
+                    ),
+                  ));
+                  var user = await Auth().signingoogle();
+                  Get.back();
+                  if (user != null)
+                    Get.offAll(HomePage());
+                  else
+                    Get.snackbar(
+                        "แจ้งเตือน", "เกิดข้อผิดพลาดไม่สามารถเข้าสู่ระบบได้");
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
