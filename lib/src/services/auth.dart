@@ -19,9 +19,13 @@ class Auth extends GetxController {
         await auth.signInWithCredential(credential).then((value) => value.user);
 
     FirebaseFirestore.instance.collection("user").add({
+      "userid": user.value.uid,
       "username": user.value.displayName,
       "email": user.value.email,
       "photo_url": user.value.photoURL,
+      "reaction": [],
+      "comment": [],
+      "bookmark": [],
     });
 
     return user.value;
