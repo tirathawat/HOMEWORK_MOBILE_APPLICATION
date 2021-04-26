@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/pages/loading/promote_app_page.dart';
+import 'package:home_mobile_application/src/services/auth.dart';
 
 class ProfilePage extends StatelessWidget {
   final List<String> rooms = [
@@ -230,8 +233,14 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             width: 15,
           ),
-          SvgPicture.asset(
-            Asset.SETTING_ICON,
+          GestureDetector(
+            onTap: () {
+              Auth().signout();
+              Get.off(PromoteAppPage());
+            },
+            child: SvgPicture.asset(
+              Asset.SETTING_ICON,
+            ),
           ),
           SizedBox(
             width: 30,

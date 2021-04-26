@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,6 +17,13 @@ class Auth extends GetxController {
         idToken: authentication.idToken, accessToken: authentication.idToken);
     user.value =
         await auth.signInWithCredential(credential).then((value) => value.user);
+
+    FirebaseFirestore.instance.collection("user").add({
+      "username": user.value.displayName,
+      "email": user.value.email,
+      "photo_url": user.value.photoURL,
+    });
+
     return user.value;
   }
 
