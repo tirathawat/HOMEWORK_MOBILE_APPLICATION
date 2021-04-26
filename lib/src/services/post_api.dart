@@ -1,26 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:home_mobile_application/src/models/post_model.dart';
+import 'package:home_mobile_application/src/models/post_api_model.dart';
 
 class PostController extends GetxController {
-  Rx<List<PostModel>> post = Rx<List<PostModel>>();
+  Rx<List<PostApiModel>> post = Rx<List<PostApiModel>>();
 
-  Future<List<PostModel>> getPost() async {
-    return FirebaseFirestore.instance.collection("posts").get().then((e) {
-      List<PostModel> posts = [];
+  Future<void> getPost() async {
+    post.bindStream(
+        FirebaseFirestore.instance.collection("posts").snapshots().map((e) {
+      List<PostApiModel> posts = [];
       e.docs.forEach((element) {
-        posts.add(PostModel(
-          postId: element.id,
-          header: element["header"],
-          detail: element["detail"],
-          roomId: element["room"],
-          levelId: element["level"],
-          posterId: element["poster_id"],
-          createdAt: element["created_at"].toDate(),
-        ));
+        posts.add(PostApiModel.fromJson(element.data()));
       });
       return posts;
-    });
+    }));
   }
 
   @override

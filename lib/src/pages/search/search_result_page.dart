@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/services/post_api.dart';
 import 'package:home_mobile_application/src/widgets/question_card.dart';
 
 class SearchResultPage extends StatelessWidget {
   final String searchStr;
-
-  const SearchResultPage({Key key, @required this.searchStr}) : super(key: key);
+  final PostController postController = Get.find<PostController>();
+  SearchResultPage({Key key, @required this.searchStr}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +55,9 @@ class SearchResultPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                   horizontal: 16,
                 ),
-                child: QuestionCard(),
+                child: QuestionCard(
+                  post: postController.post.value[0],
+                ),
               ),
               Container(
                 color: Color(0xFF707070).withOpacity(.25),

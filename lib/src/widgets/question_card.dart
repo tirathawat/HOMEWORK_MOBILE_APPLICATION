@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
-import 'package:home_mobile_application/src/models/post_model.dart';
+import 'package:home_mobile_application/src/models/post_api_model.dart';
 import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class QuestionCard extends StatelessWidget {
   final bool hasImage, hasText;
-  final PostModel post;
+  final PostApiModel post;
   const QuestionCard({
     Key key,
     this.hasImage = false,
@@ -18,37 +19,45 @@ class QuestionCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(PostDetailPage());
-      },
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          _buildHeading(),
+          GestureDetector(
+            onTap: _onClickCard,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                _buildTitle(),
+                SizedBox(
+                  height: 15,
+                ),
+                _buildDetail(),
+                SizedBox(
+                  height: 30,
+                ),
+              ],
             ),
-            _buildHeading(),
-            SizedBox(
-              height: 20,
-            ),
-            _buildTitle(),
-            SizedBox(
-              height: 15,
-            ),
-            _buildDetail(),
-            SizedBox(
-              height: 30,
-            ),
-            _buildBottom(),
-            SizedBox(
-              height: 15,
-            ),
-          ],
-        ),
+          ),
+          _buildBottom(),
+          SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
+  }
+
+  void _onClickCard() {
+    Get.to(PostDetailPage(
+      post: post,
+    ));
   }
 
   Row _buildBottom() {
@@ -93,7 +102,7 @@ class QuestionCard extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "150",
+            post.comment.length.toString(),
             style: TextStyle(
               fontFamily: "SF Pro",
               fontSize: 12,
@@ -115,7 +124,7 @@ class QuestionCard extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "150",
+            post.like.toString(),
             style: TextStyle(
               fontFamily: "SF Pro",
               fontSize: 12,
@@ -126,7 +135,11 @@ class QuestionCard extends StatelessWidget {
           ),
           Transform.rotate(
             angle: pi,
-            child: SvgPicture.asset(Asset.LIKE_ICON),
+            child: SvgPicture.asset(
+              Asset.LIKE_ICON,
+              color: Color(0xFFD50707),
+              //color: Color(0xFF929292),
+            ),
           ),
         ],
       ),
@@ -189,7 +202,7 @@ class QuestionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Math : G.9 : 2 m ago",
+              "${post.roomName} : ${post.levelName} : ${timeago.format(post.createdAt, locale: 'th en')}",
               style: TextStyle(
                 fontFamily: "SF Pro",
                 fontSize: 15,
@@ -197,7 +210,7 @@ class QuestionCard extends StatelessWidget {
               ),
             ),
             Text(
-              "Kasama Thongsawang",
+              post.posterName,
               style: TextStyle(
                 fontFamily: "SF Pro",
                 fontSize: 17,

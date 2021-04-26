@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
-import 'package:home_mobile_application/src/models/post_model.dart';
+import 'package:home_mobile_application/src/models/post_api_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class AnswerCard extends StatelessWidget {
-  final bool isVerify;
-  const AnswerCard({Key key, this.isVerify = false}) : super(key: key);
+  final Comment comment;
+  const AnswerCard({Key key, @required this.comment}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -27,7 +27,7 @@ class AnswerCard extends StatelessWidget {
               height: 20,
             ),
             Text(
-              "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et",
+              comment.detail,
               style: TextStyle(
                 fontFamily: "SF Pro",
                 fontSize: 12,
@@ -58,7 +58,7 @@ class AnswerCard extends StatelessWidget {
           width: 10,
         ),
         Text(
-          "Kasama Thongsawang : 1 m ",
+          "${comment.commentator} : ${timeago.format(comment.createdAt)}",
           style: TextStyle(
             fontFamily: "SF Pro",
             fontSize: 13,
@@ -116,7 +116,7 @@ class AnswerCard extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "150",
+            comment.comment == null ? "" : comment.comment.length.toString(),
             style: TextStyle(
               fontFamily: "SF Pro",
               fontSize: 12,
@@ -138,7 +138,7 @@ class AnswerCard extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "150",
+            comment.like.toString(),
             style: TextStyle(
               fontFamily: "SF Pro",
               fontSize: 12,

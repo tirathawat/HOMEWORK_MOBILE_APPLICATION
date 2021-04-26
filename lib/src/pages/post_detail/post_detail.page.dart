@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/controller/navbar_controller.dart';
-import 'package:home_mobile_application/src/models/post_model.dart';
+import 'package:home_mobile_application/src/models/post_api_model.dart';
 import 'package:home_mobile_application/src/pages/home/home_page.dart';
 import 'package:home_mobile_application/src/widgets/answer_card.dart';
 import 'package:home_mobile_application/src/widgets/question_card.dart';
 
 class PostDetailPage extends StatelessWidget {
   final _navbarController = Get.put(NavbarController());
-
-  PostDetailPage({Key key}) : super(key: key);
+  final PostApiModel post;
+  PostDetailPage({Key key, @required this.post}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +29,8 @@ class PostDetailPage extends StatelessWidget {
                   horizontal: 16,
                 ),
                 child: QuestionCard(
-                    //post: post,
-                    ),
+                  post: post,
+                ),
               ),
               Container(
                 color: Color(0xFF707070).withOpacity(.25),
@@ -40,10 +39,12 @@ class PostDetailPage extends StatelessWidget {
               ),
               Column(
                 children: List.generate(
-                  5,
+                  post.comment.length,
                   (index) => Column(
                     children: [
-                      AnswerCard(),
+                      AnswerCard(
+                        comment: post.comment[index],
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
                           left: 30,
@@ -58,8 +59,10 @@ class PostDetailPage extends StatelessWidget {
                             SizedBox(
                               width: 15,
                             ),
-                            ...List.generate(1, (index) {
-                              return AnswerCard();
+                            ...List.generate(post.comment[index].comment.length,
+                                (i) {
+                              return AnswerCard(
+                                  comment: post.comment[index].comment[i]);
                             }),
                           ],
                         ),
