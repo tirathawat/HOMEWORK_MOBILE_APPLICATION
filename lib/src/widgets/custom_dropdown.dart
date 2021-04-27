@@ -4,21 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomDropdown extends StatelessWidget {
-  final RxString _chosenValue = ''.obs;
+  final RxString chosenValue;
 
   final String initialValue;
   final List<String> items;
   final String hintText;
 
   CustomDropdown(
-      {Key key, this.initialValue, @required this.items, this.hintText})
+      {Key key,
+      this.initialValue,
+      @required this.items,
+      this.hintText,
+      @required this.chosenValue})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     if (hintText != null)
-      _chosenValue.value = null;
+      chosenValue.value = null;
     else
-      _chosenValue.value = initialValue;
+      chosenValue.value = initialValue;
     return Obx(
       () => DropdownButtonHideUnderline(
         child: ButtonTheme(
@@ -38,7 +42,7 @@ class CustomDropdown extends StatelessWidget {
                 size: 18,
               ),
             ),
-            value: _chosenValue.value,
+            value: chosenValue.value,
             items: items.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -46,7 +50,7 @@ class CustomDropdown extends StatelessWidget {
               );
             }).toList(),
             onChanged: (value) {
-              _chosenValue.value = value;
+              chosenValue.value = value;
             },
           ),
         ),

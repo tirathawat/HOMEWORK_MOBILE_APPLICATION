@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/controller/create_post_controller.dart';
 import 'package:home_mobile_application/src/widgets/custom_dropdown.dart';
 
 class CreatePostPage extends StatelessWidget {
+  final createPostController = Get.find<CreatePostController>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,11 +26,11 @@ class CreatePostPage extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              _buildTextField("Title"),
+              _buildTextField("Title", createPostController.title),
               SizedBox(
                 height: 20,
               ),
-              _buildTextField("Description"),
+              _buildTextField("Description", createPostController.detail),
             ],
           ),
         ),
@@ -72,8 +75,9 @@ class CreatePostPage extends StatelessWidget {
     );
   }
 
-  TextField _buildTextField(String hint) {
+  TextField _buildTextField(String hint, TextEditingController controller) {
     return TextField(
+        controller: controller,
         style: TextStyle(
           fontFamily: "SF Pro",
           fontSize: 17,
@@ -110,10 +114,12 @@ class CreatePostPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomDropdown(
+          chosenValue: createPostController.room,
           hintText: "Subject",
           items: ['Mathematics', 'Physics', 'Biology', 'Chemistry'],
         ),
         CustomDropdown(
+          chosenValue: createPostController.level,
           hintText: "Grade",
           items: ['Grade 7', 'Grade 8', 'Grade 9', 'High school'],
         ),

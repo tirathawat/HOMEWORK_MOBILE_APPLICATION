@@ -18,15 +18,22 @@ class Auth extends GetxController {
     user.value =
         await auth.signInWithCredential(credential).then((value) => value.user);
 
-    FirebaseFirestore.instance.collection("user").add({
-      "userid": user.value.uid,
-      "username": user.value.displayName,
-      "email": user.value.email,
-      "photo_url": user.value.photoURL,
-      "reaction": [],
-      "comment": [],
-      "bookmark": [],
-    });
+    var snapshot = await FirebaseFirestore.instance
+        .collection("user")
+        .where("userid", isEqualTo: user.value.uid)
+        .get();
+
+    if (snapshot.docs.length == 0) {
+      FirebaseFirestore.instance.collection("user").add({
+        "userid": user.value.uid,
+        "username": user.value.displayName,
+        "email": user.value.email,
+        "photo_url": user.value.photoURL,
+        "reaction": [],
+        "comment": [],
+        "bookmark": [],
+      });
+    }
 
     return user.value;
   }

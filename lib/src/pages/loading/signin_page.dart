@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/pages/home/home_page.dart';
 import 'package:home_mobile_application/src/services/auth.dart';
+import 'package:home_mobile_application/src/services/user_api.dart';
 
 class SignInPage extends StatelessWidget {
+  final auth = Get.put(Auth());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +42,15 @@ class SignInPage extends StatelessWidget {
                       ),
                     ),
                   ));
-                  var user = await Auth().signingoogle();
+                  var user = await auth.signingoogle();
                   Get.back();
-                  if (user != null)
+                  if (user != null) {
+                    Get.put(UserController());
                     Get.offAll(HomePage());
-                  else
+                  } else {
                     Get.snackbar(
                         "แจ้งเตือน", "เกิดข้อผิดพลาดไม่สามารถเข้าสู่ระบบได้");
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

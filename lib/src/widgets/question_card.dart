@@ -6,12 +6,17 @@ import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/models/post_api_model.dart';
 import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
+import 'package:home_mobile_application/src/services/post_api.dart';
+import 'package:home_mobile_application/src/services/user_api.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class QuestionCard extends StatelessWidget {
+  final userController = Get.find<UserController>();
+  final postController = Get.find<PostController>();
   final bool hasImage, hasText;
   final PostApiModel post;
-  const QuestionCard({
+
+  QuestionCard({
     Key key,
     this.hasImage = false,
     this.hasText = true,
@@ -72,22 +77,56 @@ class QuestionCard extends StatelessWidget {
 
   _buildbookmark() {
     return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(Asset.BOOKMARK_ICON),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            "mark",
-            style: TextStyle(
-              fontFamily: "SF Pro",
-              fontSize: 12,
-              color: Color(0xFFFF9900),
+      child: GestureDetector(
+        onTap: () async {
+          if (userController.isBookmark(post.postId))
+            userController.deleteBookmark(post.postId);
+          else
+            userController.addBookmark(post.postId);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Obx(() {
+              if (userController.user.value == null)
+                return SvgPicture.asset(Asset.BOOKMARK_ICON);
+              else
+                return SvgPicture.asset(
+                  Asset.BOOKMARK_ICON,
+                  color: userController.isBookmark(post.postId)
+                      ? Color(0xFFFF9900)
+                      : Color(0xFF929292),
+                );
+            }),
+            SizedBox(
+              width: 10,
             ),
-          ),
-        ],
+            Obx(
+              () {
+                if (userController.user.value == null)
+                  return Text(
+                    "mark",
+                    style: TextStyle(
+                      fontFamily: "SF Pro",
+                      fontSize: 12,
+                      color: Color(0xFF929292),
+                    ),
+                  );
+                else
+                  return Text(
+                    "mark",
+                    style: TextStyle(
+                      fontFamily: "SF Pro",
+                      fontSize: 12,
+                      color: userController.isBookmark(post.postId)
+                          ? Color(0xFFFF9900)
+                          : Color(0xFF929292),
+                    ),
+                  );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -119,7 +158,34 @@ class QuestionCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(Asset.LIKE_ICON),
+          GestureDetector(
+            onTap: () {
+              var check = userController.checkPostLike(post.postId);
+
+              if (check == null || check == false) {
+                userController.reactionPost(post.postId, true);
+
+                if (check == false) {
+                  userController.deleteReactionPost(post.postId, false);
+                  postController.changeNumberOfLike(post.postId, 2);
+                } else
+                  postController.changeNumberOfLike(post.postId, 1);
+              } else {
+                userController.deleteReactionPost(post.postId, true);
+                postController.changeNumberOfLike(post.postId, -1);
+              }
+            },
+            child: Obx(
+              () => SvgPicture.asset(
+                Asset.LIKE_ICON,
+                color: userController.user.value.reaction.length == 0
+                    ? Color(0xFF929292)
+                    : userController.checkPostLike(post.postId)
+                        ? Color(0xFF00800D)
+                        : Color(0xFF929292),
+              ),
+            ),
+          ),
           SizedBox(
             width: 10,
           ),
@@ -133,12 +199,44 @@ class QuestionCard extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Transform.rotate(
-            angle: pi,
-            child: SvgPicture.asset(
-              Asset.LIKE_ICON,
-              color: Color(0xFFD50707),
-              //color: Color(0xFF929292),
+          GestureDetector(
+            onTap: () async {
+              var check = userController.checkPostLike(post.postId);
+
+              if (check == null || check == true) {
+                userController.reactionPost(post.postId, false);
+
+                if (check == true) {
+                  userController.deleteReactionPost(post.postId, true);
+                  postController.changeNumberOfLike(post.postId, -2);
+                } else {
+                  postController.changeNumberOfLike(post.postId, -1);
+                }
+              } else {
+                userController.deleteReactionPost(post.postId, false);
+                postController.changeNumberOfLike(post.postId, 1);
+              }
+            },
+            child: Transform.rotate(
+              angle: pi,
+              child: Obx(
+                () {
+                  if (userController.user.value == null) {
+                    return SvgPicture.asset(
+                      Asset.LIKE_ICON,
+                      color: Color(0xFF929292),
+                    );
+                  }
+                  return SvgPicture.asset(
+                    Asset.LIKE_ICON,
+                    color: userController.user.value.reaction.length == 0
+                        ? Color(0xFF929292)
+                        : userController.checkPostLike(post.postId)
+                            ? Color(0xFF929292)
+                            : Color(0xFFD50707),
+                  );
+                },
+              ),
             ),
           ),
         ],

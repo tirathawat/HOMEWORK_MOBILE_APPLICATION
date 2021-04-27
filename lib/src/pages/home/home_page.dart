@@ -6,12 +6,14 @@ import 'package:get/get.dart';
 import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/constants/items_dropdown.dart';
+import 'package:home_mobile_application/src/controller/create_post_controller.dart';
 import 'package:home_mobile_application/src/controller/navbar_controller.dart';
 import 'package:home_mobile_application/src/pages/create_post/create_post_page.dart';
 import 'package:home_mobile_application/src/pages/feed/feed_page.dart';
 import 'package:home_mobile_application/src/pages/notification/notification.dart';
 import 'package:home_mobile_application/src/pages/profile/profile_page.dart';
 import 'package:home_mobile_application/src/pages/search/search_page.dart';
+import 'package:home_mobile_application/src/services/user_api.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,9 +22,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _navbarController = Get.put(NavbarController());
+  final userController = Get.find<UserController>();
+  final createPostController = Get.put(CreatePostController());
   final int _gradeDropdownIndex = 0;
   @override
   Widget build(BuildContext context) {
+    userController.getUser();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppbar(),
