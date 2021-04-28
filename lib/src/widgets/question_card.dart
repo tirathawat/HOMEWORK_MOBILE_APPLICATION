@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
+import 'package:home_mobile_application/src/controller/comment_controller.dart';
 import 'package:home_mobile_application/src/models/post_api_model.dart';
 import 'package:home_mobile_application/src/pages/post_detail/post_detail.page.dart';
 import 'package:home_mobile_application/src/services/post_api.dart';
@@ -13,6 +15,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class QuestionCard extends StatelessWidget {
   final userController = Get.find<UserController>();
   final postController = Get.find<PostController>();
+  final commentController = Get.put(CommentController());
   final bool hasImage, hasText;
   final PostApiModel post;
   final bool isRealtime;
@@ -64,7 +67,7 @@ class QuestionCard extends StatelessWidget {
 
   void _onClickCard() {
     Get.to(PostDetailPage(
-      post: post,
+      post: post.obs,
     ));
   }
 
@@ -136,22 +139,32 @@ class QuestionCard extends StatelessWidget {
 
   _buildComment() {
     return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(Asset.COMMENT_ICON),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            post.comment.length.toString(),
-            style: TextStyle(
-              fontFamily: "SF Pro",
-              fontSize: 12,
-              color: Color(0xFF929292),
+      child: GestureDetector(
+        onTap: () {
+          print("comment click");
+
+          if (!isRealtime) {
+            commentController.isComment.value =
+                !commentController.isComment.value;
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(Asset.COMMENT_ICON),
+            SizedBox(
+              width: 10,
             ),
-          ),
-        ],
+            Text(
+              post.comment.length.toString(),
+              style: TextStyle(
+                fontFamily: "SF Pro",
+                fontSize: 12,
+                color: Color(0xFF929292),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
