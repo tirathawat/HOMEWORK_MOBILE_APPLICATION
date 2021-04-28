@@ -5,17 +5,23 @@ import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/pages/loading/promote_app_page.dart';
 import 'package:home_mobile_application/src/services/auth.dart';
+import 'package:home_mobile_application/src/services/post_api.dart';
 import 'package:home_mobile_application/src/services/user_api.dart';
 
 class ProfilePage extends StatelessWidget {
   final userController = Get.find<UserController>();
+  final postController = Get.find<PostController>();
+  // List<String> rooms = [];
   final List<String> rooms = [
-    "Math",
+    "Mathasdasdasd",
     "English",
     "Physic",
   ];
   @override
   Widget build(BuildContext context) {
+    // rooms = postController.getUserPost(userController.user.value.userid);
+    print(postController.getUserPost(userController.user.value.userid));
+    print(postController.getUserPost('asdasd'));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppBar(),

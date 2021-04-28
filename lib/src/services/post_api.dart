@@ -12,7 +12,7 @@ class PostController extends GetxController {
   }
 
   Future<void> createPost(
-      {String room, String level, String tital, String detail}) async {}
+      {String room, String level, String title, String detail}) async {}
 
   Future<void> getPost() async {
     post.bindStream(
@@ -27,13 +27,15 @@ class PostController extends GetxController {
     }));
   }
 
-  Future<void> getUserPost(String id) async{
+  List getUserPost(String id) {
+    if(post.value==null) return [];
     List<String> recentRoom;
-    for (PostApiModel item in post.value) {
+    post.value.forEach((item) {
       if(item.posterId==id && !recentRoom.contains(item.roomName)) {
         recentRoom.add(item.roomName);
       }
-    }
+    });
+    return recentRoom;
   }
 
   @override
