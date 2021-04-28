@@ -15,12 +15,14 @@ class QuestionCard extends StatelessWidget {
   final postController = Get.find<PostController>();
   final bool hasImage, hasText;
   final PostApiModel post;
-
+  final bool isRealtime;
+  final RxInt add = 0.obs;
   QuestionCard({
     Key key,
     this.hasImage = false,
     this.hasText = true,
     @required this.post,
+    this.isRealtime = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class QuestionCard extends StatelessWidget {
             height: 20,
           ),
           _buildHeading(),
-          GestureDetector(
+          InkWell(
             onTap: _onClickCard,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,10 +171,13 @@ class QuestionCard extends StatelessWidget {
                 if (check == false) {
                   userController.deleteReactionPost(post.postId, false);
                   postController.changeNumberOfLike(post.postId, 2);
+                  add.value = 0;
                 } else
                   postController.changeNumberOfLike(post.postId, 1);
+                add.value = 1;
               } else {
                 userController.deleteReactionPost(post.postId, true);
+                add.value = 0;
                 postController.changeNumberOfLike(post.postId, -1);
               }
             },
@@ -194,11 +199,13 @@ class QuestionCard extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Text(
-            post.like.toString(),
-            style: TextStyle(
-              fontFamily: "SF Pro",
-              fontSize: 12,
+          Obx(
+            () => Text(
+              (post.like + add.value).toString(),
+              style: TextStyle(
+                fontFamily: "SF Pro",
+                fontSize: 12,
+              ),
             ),
           ),
           SizedBox(
@@ -214,12 +221,15 @@ class QuestionCard extends StatelessWidget {
                 if (check == true) {
                   userController.deleteReactionPost(post.postId, true);
                   postController.changeNumberOfLike(post.postId, -2);
+                  add.value = 0;
                 } else {
                   postController.changeNumberOfLike(post.postId, -1);
+                  add.value = -1;
                 }
               } else {
                 userController.deleteReactionPost(post.postId, false);
                 postController.changeNumberOfLike(post.postId, 1);
+                add.value = 0;
               }
             },
             child: Transform.rotate(
@@ -275,7 +285,10 @@ class QuestionCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset(Asset.BOOK_ICON),
+        SvgPicture.asset(
+          Asset.BOOK_ICON,
+          color: post.isVerify ? Color(0xFF00800D) : Color(0xFF929292),
+        ),
         SizedBox(
           width: 10,
         ),

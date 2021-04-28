@@ -134,6 +134,20 @@ class _HomePageState extends State<HomePage> {
                   createPostController.level.value != '' &&
                   createPostController.title.text != '' &&
                   createPostController.detail.text != '') {
+                AwesomeDialog(
+                    context: context,
+                    animType: AnimType.LEFTSLIDE,
+                    headerAnimationLoop: false,
+                    dialogType: DialogType.SUCCES,
+                    title: 'Succes',
+                    desc: 'Create post complete',
+                    btnOkOnPress: () {
+                      _navbarController.currentIndex.value = 0;
+                      setState(() {});
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    onDissmissCallback: () {})
+                  ..show();
                 postController
                     .createPost(
                         room: createPostController.room.value,
@@ -142,20 +156,6 @@ class _HomePageState extends State<HomePage> {
                         detail: createPostController.detail.text)
                     .then((value) {
                   createPostController.clear();
-                  AwesomeDialog(
-                      context: context,
-                      animType: AnimType.LEFTSLIDE,
-                      headerAnimationLoop: false,
-                      dialogType: DialogType.SUCCES,
-                      title: 'Succes',
-                      desc: 'Create post complete',
-                      btnOkOnPress: () {
-                        _navbarController.currentIndex.value = 0;
-                        setState(() {});
-                      },
-                      btnOkIcon: Icons.check_circle,
-                      onDissmissCallback: () {})
-                    ..show();
                 });
               } else {
                 Get.snackbar("Alert", "Please fill out all information.");

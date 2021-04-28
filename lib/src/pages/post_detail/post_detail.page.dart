@@ -29,6 +29,7 @@ class PostDetailPage extends StatelessWidget {
                   horizontal: 16,
                 ),
                 child: QuestionCard(
+                  isRealtime: false,
                   post: post,
                 ),
               ),
