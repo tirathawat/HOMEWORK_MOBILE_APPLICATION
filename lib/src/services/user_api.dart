@@ -49,9 +49,12 @@ class UserController extends GetxController {
     print("in function isbookmark");
     if (user.value.bookmark.length == 0) return false;
     return user.value.bookmark
-            .where((element) => element == postid)
-            .toList()[0] !=
-        null;
+                .where((element) => element == postid)
+                .toList()
+                .length ==
+            0
+        ? false
+        : true;
   }
 
   bool checkPostLike(String postid) {

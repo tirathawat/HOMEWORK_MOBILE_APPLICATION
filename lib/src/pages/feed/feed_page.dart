@@ -42,8 +42,8 @@ class FeedPage extends StatelessWidget {
                           ),
                           child: QuestionCard(
                             post: postController.post.value[index],
-                            hasImage: index == 1 ? true : false,
-                            hasText: index == 1 ? false : true,
+                            hasImage: false,
+                            hasText: true,
                           ),
                         ),
                         Container(

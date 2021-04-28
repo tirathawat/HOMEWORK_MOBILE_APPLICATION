@@ -35,6 +35,7 @@ class QuestionCard extends StatelessWidget {
           GestureDetector(
             onTap: _onClickCard,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 20,
@@ -176,14 +177,18 @@ class QuestionCard extends StatelessWidget {
               }
             },
             child: Obx(
-              () => SvgPicture.asset(
-                Asset.LIKE_ICON,
-                color: userController.user.value.reaction.length == 0
-                    ? Color(0xFF929292)
-                    : userController.checkPostLike(post.postId)
-                        ? Color(0xFF00800D)
-                        : Color(0xFF929292),
-              ),
+              () {
+                bool check = userController.checkPostLike(post.postId);
+                return SvgPicture.asset(
+                  Asset.LIKE_ICON,
+                  color: userController.user.value.reaction.length == 0 ||
+                          check == null
+                      ? Color(0xFF929292)
+                      : check
+                          ? Color(0xFF00800D)
+                          : Color(0xFF929292),
+                );
+              },
             ),
           ),
           SizedBox(
@@ -226,15 +231,18 @@ class QuestionCard extends StatelessWidget {
                       Asset.LIKE_ICON,
                       color: Color(0xFF929292),
                     );
+                  } else {
+                    bool check = userController.checkPostLike(post.postId);
+                    return SvgPicture.asset(
+                      Asset.LIKE_ICON,
+                      color: userController.user.value.reaction.length == 0 ||
+                              check == null
+                          ? Color(0xFF929292)
+                          : check
+                              ? Color(0xFF929292)
+                              : Color(0xFFD50707),
+                    );
                   }
-                  return SvgPicture.asset(
-                    Asset.LIKE_ICON,
-                    color: userController.user.value.reaction.length == 0
-                        ? Color(0xFF929292)
-                        : userController.checkPostLike(post.postId)
-                            ? Color(0xFF929292)
-                            : Color(0xFFD50707),
-                  );
                 },
               ),
             ),
@@ -300,12 +308,13 @@ class QuestionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${post.roomName} : ${post.levelName} : ${timeago.format(post.createdAt, locale: 'th en')}",
+              "${post.roomName} : ${post.levelName} : ${timeago.format(post.createdAt, locale: 'en_short')}",
               style: TextStyle(
                 fontFamily: "SF Pro",
                 fontSize: 15,
                 color: Color(0xFF929292),
               ),
+              overflow: TextOverflow.ellipsis,
             ),
             Text(
               post.posterName,

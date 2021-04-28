@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ import 'package:home_mobile_application/src/pages/feed/feed_page.dart';
 import 'package:home_mobile_application/src/pages/notification/notification.dart';
 import 'package:home_mobile_application/src/pages/profile/profile_page.dart';
 import 'package:home_mobile_application/src/pages/search/search_page.dart';
+import 'package:home_mobile_application/src/services/post_api.dart';
 import 'package:home_mobile_application/src/services/user_api.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   final _navbarController = Get.put(NavbarController());
   final userController = Get.find<UserController>();
   final createPostController = Get.put(CreatePostController());
+  final postController = Get.put(PostController());
   final int _gradeDropdownIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -125,7 +128,40 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
-        SvgPicture.asset(Asset.SEND_ICON),
+        GestureDetector(
+            onTap: () async {
+              if (createPostController.room.value != '' &&
+                  createPostController.level.value != '' &&
+                  createPostController.title.text != '' &&
+                  createPostController.detail.text != '') {
+                postController
+                    .createPost(
+                        room: createPostController.room.value,
+                        level: createPostController.level.value,
+                        title: createPostController.title.text,
+                        detail: createPostController.detail.text)
+                    .then((value) {
+                  createPostController.clear();
+                  AwesomeDialog(
+                      context: context,
+                      animType: AnimType.LEFTSLIDE,
+                      headerAnimationLoop: false,
+                      dialogType: DialogType.SUCCES,
+                      title: 'Succes',
+                      desc: 'Create post complete',
+                      btnOkOnPress: () {
+                        _navbarController.currentIndex.value = 0;
+                        setState(() {});
+                      },
+                      btnOkIcon: Icons.check_circle,
+                      onDissmissCallback: () {})
+                    ..show();
+                });
+              } else {
+                Get.snackbar("Alert", "Please fill out all information.");
+              }
+            },
+            child: SvgPicture.asset(Asset.SEND_ICON)),
         SizedBox(
           width: 20,
         ),

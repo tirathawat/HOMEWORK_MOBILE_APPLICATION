@@ -6,4 +6,9 @@ class CreatePostController extends GetxController {
   RxString level = ''.obs;
   TextEditingController title = TextEditingController();
   TextEditingController detail = TextEditingController();
+
+  void clear() {
+    title.clear();
+    detail.clear();
+  }
 }

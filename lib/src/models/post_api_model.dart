@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 List<PostApiModel> postApiModelFromJson(String str) => List<PostApiModel>.from(
     json.decode(str).map((x) => PostApiModel.fromJson(x)));
 
@@ -65,7 +67,7 @@ class PostApiModel {
         "level_name": levelName == null ? null : levelName,
         "like": like == null ? null : like,
         "room_name": roomName == null ? null : roomName,
-        "created_at": createdAt == null ? null : createdAt,
+        "created_at": FieldValue.serverTimestamp(),
         "comment": comment == null
             ? null
             : List<dynamic>.from(comment.map((x) => x.toJson())),
