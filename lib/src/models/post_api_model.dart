@@ -95,7 +95,7 @@ class Comment {
   String commentator;
   List<Comment> comment;
   String detail;
-  DateTime createdAt;
+  String createdAt;
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
         isVerify: json["is_verify"] == null ? null : json["is_verify"],
@@ -106,18 +106,17 @@ class Comment {
             : List<Comment>.from(
                 json["comment"].map((x) => Comment.fromJson(x))),
         detail: json["detail"] == null ? null : json["detail"],
-        createdAt:
-            json["created_at"] == null ? null : json["created_at"].toDate(),
+        createdAt: json["created_at"] == null ? null : json["created_at"],
       );
 
   Map<String, dynamic> toJson() => {
-        "is_verify": isVerify == null ? null : isVerify,
+        "is_verify": isVerify == null ? false : isVerify,
         "like": like == null ? null : like,
         "commentator": commentator == null ? null : commentator,
         "comment": comment == null
             ? null
             : List<dynamic>.from(comment.map((x) => x.toJson())),
         "detail": detail == null ? null : detail,
-        "created_at": createdAt == null ? null : createdAt,
+        "created_at": FieldValue.serverTimestamp(),
       };
 }

@@ -58,7 +58,7 @@ class AnswerCard extends StatelessWidget {
           width: 10,
         ),
         Text(
-          "${comment.commentator} : ${timeago.format(comment.createdAt)}",
+          "${comment.commentator} : ${timeago.format(DateTime.parse(comment.createdAt))}",
           style: TextStyle(
             fontFamily: "SF Pro",
             fontSize: 13,
@@ -133,7 +133,10 @@ class AnswerCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(Asset.LIKE_ICON),
+          SvgPicture.asset(
+            Asset.LIKE_ICON,
+            color: Color(0xFF929292),
+          ),
           SizedBox(
             width: 10,
           ),
@@ -149,7 +152,10 @@ class AnswerCard extends StatelessWidget {
           ),
           Transform.rotate(
             angle: pi,
-            child: SvgPicture.asset(Asset.LIKE_ICON),
+            child: SvgPicture.asset(
+              Asset.LIKE_ICON,
+              color: Color(0xFF929292),
+            ),
           ),
         ],
       ),
