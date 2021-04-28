@@ -5,8 +5,10 @@ import 'package:home_mobile_application/src/config/size.dart';
 import 'package:home_mobile_application/src/constants/asset.dart';
 import 'package:home_mobile_application/src/pages/loading/promote_app_page.dart';
 import 'package:home_mobile_application/src/services/auth.dart';
+import 'package:home_mobile_application/src/services/user_api.dart';
 
 class ProfilePage extends StatelessWidget {
+  final userController = Get.find<UserController>();
   final List<String> rooms = [
     "Math",
     "English",
@@ -165,6 +167,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Row _buildHeading() {
+    String subBio = (userController.user.value.postNo != null ? userController.user.value.postNo.toString() : '0') + " Posts " + (userController.user.value.commentNo != null ? userController.user.value.commentNo.toString() : '0') + " Comments";
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -182,7 +185,7 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "mai yak sod lew kub",
+                  userController.user.value.bio,
                   style: TextStyle(
                       fontFamily: "SF Pro",
                       fontSize: 13,
@@ -194,7 +197,7 @@ class ProfilePage extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  "100 Posts 100 Comments",
+                  subBio,
                   style: TextStyle(
                     fontFamily: "SF Pro",
                     fontSize: 11,
@@ -217,7 +220,7 @@ class ProfilePage extends StatelessWidget {
           color: Colors.black,
         ),
         title: Text(
-          "K. Thongsawang",
+          userController.user.value.username,
           style: TextStyle(
             fontFamily: "SF Pro",
             fontSize: 20,

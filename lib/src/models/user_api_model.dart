@@ -16,6 +16,9 @@ class UserApiModel {
     this.bookmark,
     this.username,
     this.comment,
+    this.commentNo,
+    this.postNo,
+    this.bio
   });
 
   String userid;
@@ -25,6 +28,9 @@ class UserApiModel {
   List<String> bookmark;
   String username;
   List<String> comment;
+  int commentNo;
+  int postNo;
+  String bio;
 
   factory UserApiModel.fromJson(Map<String, dynamic> json) => UserApiModel(
         userid: json["userid"] == null ? null : json["userid"],
@@ -41,6 +47,9 @@ class UserApiModel {
         comment: json["comment"] == null
             ? null
             : List<String>.from(json["comment"].map((x) => x)),
+        commentNo: json["comment_no"] == null ? 0 : json["comment_no"],
+        postNo : json["post_no"] == null ? 0 : json["post_no"],
+        bio : json["bio"] == null ? null : json["bio"]
       );
 }
 

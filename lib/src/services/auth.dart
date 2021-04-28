@@ -32,6 +32,9 @@ class Auth extends GetxController {
         "reaction": [],
         "comment": [],
         "bookmark": [],
+        "post_no" : [],
+        "comment_no" : [],
+        "bio" : ""
       });
     }
 
